@@ -7,6 +7,196 @@
     <title>Document</title>
 </head>
 <body>
-    hello
+    <div id="tickets"></div>
+    <div id="register"></div>
+    <div id="my-try"></div>
 </body>
+
+<script>
+     let tickets = [
+        {
+            "code": 123,
+            "type": "Adult",
+            "price": 70,
+            "count": 0
+        },
+        {
+            "code": 456,
+            "type": "Child",
+            "price": 50,
+            "count": 0
+        },
+        {
+            "code": 789,
+            "type": "Soldier",
+            "price": 60,
+            "count": 0
+        }]
+
+    let basket = [];
+
+    function createTickets() {
+            tickets.map(tic => {
+                const button = document.createElement('button')
+                button.classList.add(tic.type);
+                const ticket = document.createTextNode(tic.type)
+                button.appendChild(ticket)
+                //document.body.appendChild(button)
+                document.getElementById('tickets').appendChild(button)
+            
+            })
+        }
+    createTickets();
+
+    function createBasket() {
+        let cols = ['Type', 'Quantity', 'Price', 'Total', '']
+
+        var t = document.createElement('table');
+
+        t.appendChild(document.createElement('thead'));
+        t.querySelector('thead').appendChild(document.createElement('tr'));
+
+        for (var i = 0; i < cols.length; i++) {
+            var heading = document.createElement('td');
+            heading.textContent = cols[i];
+            t.querySelector('thead tr').appendChild(heading);
+        }
+
+        document.getElementById('register').appendChild(t);
+
+
+        for (var i = 0; i < basket.length; i++) {
+            var r = document.createElement('tr');
+            var s = basket[i];
+
+            r.dataset.ticketId = s.code;
+
+            var typeCell = document.createElement('td');
+            typeCell.textContent = s.type;
+            typeCell.classList.add('type');
+            typeCell.dataset.ticketId = s.type;
+
+            var countCell = document.createElement('td');
+            countCell.textContent = s.count;
+            countCell.classList.add('count');
+            countCell.dataset.ticketId = s.count;
+
+            var priceCell = document.createElement('td');
+            priceCell.textContent = s.price;
+            priceCell.classList.add('price');
+            priceCell.dataset.ticketId = s.price;
+
+            
+            
+            r.appendChild(typeCell)
+            r.appendChild(countCell)
+            r.appendChild(priceCell)
+            
+            t.appendChild(r)
+        }   
+
+    }
+    createBasket();
+
+
+    function addTicket() {
+        document.addEventListener('click', function (e) {
+
+            for (let i = 0; i < tickets.length; i++) {
+                //if (e.target && e.target.classList == tickets[i].type) {
+                if (e.target.classList == tickets[i].type && !basket.includes(tickets[i])) {
+                    tickets[i].count = 1;
+                    basket.push(tickets[i])
+
+                    console.log(basket)
+
+                    // const name = document.createElement('p')
+                    // const n = document.createTextNode(basket[i].type)
+                    // name.appendChild(n)
+                    // document.getElementById('my-try').appendChild(name)
+
+                    var r = document.createElement('tr');
+                    var s = basket[i];
+
+                    r.dataset.ticketId = s.code;
+
+                    var typeCell = document.createElement('td');
+                    typeCell.textContent = s.type;
+                    typeCell.classList.add('type');
+                    typeCell.dataset.ticketId = s.type;
+
+                    var countCell = document.createElement('td');
+                    countCell.textContent = s.count;
+                    countCell.classList.add('count');
+                    countCell.dataset.ticketId = s.count;
+
+                    var priceCell = document.createElement('td');
+                    priceCell.textContent = s.price;
+                    priceCell.classList.add('price');
+                    priceCell.dataset.ticketId = s.price;
+
+                    
+                    
+                    r.appendChild(typeCell)
+                    r.appendChild(countCell)
+                    r.appendChild(priceCell)
+
+                    document.getElementById('register').appendChild(r);
+
+                }
+                else if (e.target.classList == tickets[i].type) {
+                    tickets[i].count++;
+                    console.log(basket)
+                }
+            }
+        });
+
+        // basket.map(x =>{
+        //     const name = document.createElement('p')
+        //     const n = document.createTextNode(x.type)
+        //     name.appendChild(n)
+        //     document.getElementById('my-try').appendChild(name)
+        // })
+    }
+    addTicket()
+
+    function removeTicket() {
+        document.addEventListener('click', function (e) {
+            for (let i = 0; i < basket.length; i++) {
+                if (e.target.classList == 'remove-btn' && basket[i].count > 0) {
+
+                    basket[i].count--;
+
+                    console.log(basket)
+
+                }
+                else if (e.target.classList == 'remove-btn' && basket[i].count == 0) {
+                    basket.splice(i, 1)
+                }
+            }
+
+        });
+    }
+    removeTicket();
+
+    // function myTry(){
+    //     basket.map(x =>{
+    //             const name = document.createElement('p')
+    //             const n = document.createTextNode(x.type)
+    //             name.appendChild(n)
+    //             document.getElementById('my-try').appendChild(name)
+    //         })
+
+    //         for(let i =0; i < basket.length; i++){
+    //             const name = document.createElement('p')
+    //             const n = document.createTextNode(x.type)
+    //             name.appendChild(n)
+    //             document.getElementById('my-try').appendChild(name)
+    //         }
+
+    // }
+    // myTry()
+
+
+</script>
 </html>
