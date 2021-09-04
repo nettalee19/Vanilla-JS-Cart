@@ -8,8 +8,10 @@
 </head>
 <body>
     <div id="tickets"></div>
-    <div id="register"></div>
-    <div id="my-try"></div>
+    <div id="register" class="shop">
+        <div id="basket"></div>
+    </div>
+    
 </body>
 
 <script>
@@ -18,19 +20,22 @@
             "code": 123,
             "type": "Adult",
             "price": 70,
-            "count": 0
+            "count": 0,
+            
         },
         {
             "code": 456,
             "type": "Child",
             "price": 50,
-            "count": 0
+            "count": 0,
+            
         },
         {
             "code": 789,
             "type": "Soldier",
             "price": 60,
-            "count": 0
+            "count": 0,
+            
         }]
 
     let basket = [];
@@ -52,6 +57,7 @@
         let cols = ['Type', 'Quantity', 'Price', 'Total', '']
 
         var t = document.createElement('table');
+        //t.classList.add('basket-table');
 
         t.appendChild(document.createElement('thead'));
         t.querySelector('thead').appendChild(document.createElement('tr'));
@@ -64,89 +70,79 @@
 
         document.getElementById('register').appendChild(t);
 
-
-        for (var i = 0; i < basket.length; i++) {
-            var r = document.createElement('tr');
-            var s = basket[i];
-
-            r.dataset.ticketId = s.code;
-
-            var typeCell = document.createElement('td');
-            typeCell.textContent = s.type;
-            typeCell.classList.add('type');
-            typeCell.dataset.ticketId = s.type;
-
-            var countCell = document.createElement('td');
-            countCell.textContent = s.count;
-            countCell.classList.add('count');
-            countCell.dataset.ticketId = s.count;
-
-            var priceCell = document.createElement('td');
-            priceCell.textContent = s.price;
-            priceCell.classList.add('price');
-            priceCell.dataset.ticketId = s.price;
-
-            
-            
-            r.appendChild(typeCell)
-            r.appendChild(countCell)
-            r.appendChild(priceCell)
-            
-            t.appendChild(r)
-        }   
-
     }
     createBasket();
 
 
     function addTicket() {
         document.addEventListener('click', function (e) {
+              
+            // const register = document.getElementsByClassName('shop')[0]
+            // console.log(register)
+            // register.remove()
+
+            // const Div = document.createElement('div')
+            // Div.classList.add('shop')
+
+            
+            console.log(basket[0])
+            //const elem = document.getElementsByClassName(basket[i].type)
+            //elem.remove()
 
             for (let i = 0; i < tickets.length; i++) {
                 //if (e.target && e.target.classList == tickets[i].type) {
                 if (e.target.classList == tickets[i].type && !basket.includes(tickets[i])) {
+                    //document.getElementsByClassName('count').remove();
+                    
+                    
                     tickets[i].count = 1;
                     basket.push(tickets[i])
 
                     console.log(basket)
 
-                    // const name = document.createElement('p')
-                    // const n = document.createTextNode(basket[i].type)
-                    // name.appendChild(n)
-                    // document.getElementById('my-try').appendChild(name)
 
                     var r = document.createElement('tr');
                     var s = basket[i];
 
-                    r.dataset.ticketId = s.code;
+                    //r.dataset.ticketId = s.code;
+                    r.classList.add(s.type);
 
                     var typeCell = document.createElement('td');
                     typeCell.textContent = s.type;
                     typeCell.classList.add('type');
-                    typeCell.dataset.ticketId = s.type;
+                    typeCell.dataset.ticketId = s.type ;
 
                     var countCell = document.createElement('td');
                     countCell.textContent = s.count;
                     countCell.classList.add('count');
-                    countCell.dataset.ticketId = s.count;
+                    countCell.dataset.ticketId = s.count ;
 
                     var priceCell = document.createElement('td');
                     priceCell.textContent = s.price;
                     priceCell.classList.add('price');
-                    priceCell.dataset.ticketId = s.price;
+                    priceCell.dataset.ticketId = s.price ;
+
+                    
 
                     
                     
                     r.appendChild(typeCell)
                     r.appendChild(countCell)
                     r.appendChild(priceCell)
+                    
 
                     document.getElementById('register').appendChild(r);
+                    
+
+
 
                 }
                 else if (e.target.classList == tickets[i].type) {
+                    //basket[i].remove()
                     tickets[i].count++;
                     console.log(basket)
+
+
                 }
             }
         });
